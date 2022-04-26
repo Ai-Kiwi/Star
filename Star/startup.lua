@@ -86,7 +86,7 @@ DownloadFile("https://raw.githubusercontent.com/cc-tweaked/CC-Tweaked/v1.16.4-1.
 
 --updates the installed files
 DrawToastText((MoniterX / 2) - 4,(MoniterY / 2) - 3,"Updating Main File")
-DownloadFile("https://raw.githubusercontent.com/Ai-Kiwi/Star/main/Star/Main.lua,","Star/Main.lua")
+DownloadFile("https://raw.githubusercontent.com/Ai-Kiwi/Star/main/Star/Main.lua","Star/Main.lua")
 DrawToastText((MoniterX / 2) - 4,(MoniterY / 2) - 3,"Updating startup File")
 DownloadFile("https://raw.githubusercontent.com/Ai-Kiwi/Star/main/Star/startup.lua","Star/startup.lua")
 DrawToastText((MoniterX / 2) - 4,(MoniterY / 2) - 3,"Updating logo face File")
