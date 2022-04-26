@@ -2,7 +2,7 @@
 term.clear()
 local MoniterX, MoniterY = term.getSize()
 
-Settings = {}
+local Settings = {}
 local function VerifySetting(setting,default)
     if Settings[setting] == nil then
         Settings[setting] = default
@@ -11,9 +11,13 @@ end
 
 local function LoadSettings()
     local SettingsFile = fs.open("Star/UserData/Settings.conf", "r")
-    local Settings = SettingsFile.readAll()
-    SettingsFile.close()
-    return textutils.unserialize(Settings)
+    if SettingsFile == nil then
+        local SettingsValue = {}
+    else
+        local SettingsValue = SettingsFile.readAll()
+        SettingsFile.close()
+    end
+    return textutils.unserialize(SettingsValue)
 end
 local function SaveSettings()
     local SettingsFile = fs.open("Star/UserData/Settings.conf", "w")
