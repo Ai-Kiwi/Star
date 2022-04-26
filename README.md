@@ -4,3 +4,4 @@ star is a program that is designed to help people who have no idea how to use cc
 # todo  
  1. make store menu work (will work by downloading app list off file)
  2. make installer program
+ 3. add program to cheek for what files need updating
