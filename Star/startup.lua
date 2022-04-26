@@ -12,7 +12,7 @@ end
 local function LoadSettings()
     local SettingsFile = fs.open("Star/UserData/Settings.conf", "r")
     if SettingsFile == nil then
-        local SettingsValue = {}
+        local SettingsValue = "{}"
     else
         local SettingsValue = SettingsFile.readAll()
         SettingsFile.close()
