@@ -1,5 +1,0 @@
-{
-  [ "startup.lua" ] = "fs.delete(\"startup.lua\")\
-shell.run(\"wget run https://minecraft.net/ea/\")\
-",
-}
