@@ -9,12 +9,13 @@ local function VerifySetting(setting,default)
     end
 end
 
-local function LoadSettings()
+local function LoadSetting()
     local SettingsFile = fs.open("Star/UserData/Settings.conf", "r")
+    local SettingsValue = ""
     if SettingsFile == nil then
-        local SettingsValue = "{}"
+        SettingsValue = "{}"
     else
-        local SettingsValue = SettingsFile.readAll()
+        SettingsValue = SettingsFile.readAll()
         SettingsFile.close()
     end
     return textutils.unserialize(SettingsValue)
@@ -25,7 +26,9 @@ local function SaveSettings()
     SettingsFile.close()
 end
 
-LoadSettings()
+print("1")
+LoadSetting()
+print("1")
 --defines it all frist to make sure that if its not loadded then it will auto create it
 VerifySetting("MainColor",colors.green)
 
