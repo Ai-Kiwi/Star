@@ -9,3 +9,4 @@ to install just run the following.
  1. make store menu work (will work by downloading app list off file)
  2. make installer program
  3. add program to cheek for what files need updating
+ 4. change marketing from toaster to star
