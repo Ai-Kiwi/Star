@@ -53,16 +53,7 @@ VerifySetting("SizeOfLibarySideTab",10)
 SaveSettings()
 
 
--- script to download https://gist.githubusercontent.com/MCJack123/e634347fe7a3025d19d9f7fcf7e01c24/raw/10feb1d0442ad222681fbd22718dd74becae0300/yellowbox.lua
---downloads the yellowbox.lua file from the internet
-local function DownloadFile(URL,FILEPATH)
-    local YellowBox = http.get(URL)
-    fs.delete(FILEPATH)
-    local YellowBoxFile = fs.open(FILEPATH, "w")
-    YellowBoxFile.write(YellowBox.readAll())
-    YellowBoxFile.close()
-    YellowBox.close()
-end
+
 
 
 
@@ -224,6 +215,7 @@ local function DrawTabMenu()
     term.setTextColor(colors.white)
 end
 
+
 local function TextCutOFF(Text, Length, AddExtra)
     for i = 1, Length do
        
@@ -241,6 +233,12 @@ local function TextCutOFF(Text, Length, AddExtra)
 
 end
 
+
+
+----------------------------------
+--- Code todo with libary page ---
+----------------------------------
+
 local function DrawLibaryInfoPage()
     paintutils.drawFilledBox(Settings.SizeOfLibarySideTab + 1, 2, MoniterX, MoniterY, colors.gray, colors.gray)
     
@@ -249,21 +247,14 @@ local function DrawLibaryInfoPage()
         --draws background for title text
         paintutils.drawFilledBox(Settings.SizeOfLibarySideTab + 1, 2, MoniterX, 6, Settings.MainColor, colors.lightGray,"X")
 
-
         --draws big title text
         term.setCursorPos(Settings.SizeOfLibarySideTab + 3, 4)
-        BigFont.bigPrint(AppSlected)
+        BigFont.bigPrint(tostring(AppSlected))
         --draws play butten
         DrawTextWithBoarder("Play",Settings.SizeOfLibarySideTab + 4, 9,Settings.MainColor,colors.white,Settings.MainColor ,colors.gray, false)
-        --draws settings butten
         DrawTextWithBoarder("Settings",Settings.SizeOfLibarySideTab + 4, 12,colors.lightGray,colors.white,colors.lightGray,colors.gray, false)
-        --term.setCursorPos(Settings.SizeOfLibarySideTab + 4, 14)
-        --term.write(AppSlected)
-        
+
     end
-
-    
-
 
     paintutils.drawBox(Settings.SizeOfLibarySideTab + 1, 2, MoniterX, MoniterY, colors.black, colors.black)
 end
@@ -295,10 +286,6 @@ local function DrawlibraryMenu()
 
 end
 
-
-
-
-
 local function LibaryMenu()
     DrawlibraryMenu()
     if AppSlected then
@@ -317,10 +304,6 @@ local function LibaryMenu()
                     --play
                     LoadProgram(AppSlected)
                 end
-                
-            
-                        
-
             else
                 --player is clicking on app list
                 local ListOFApps = fs.list("Star/Apps/")
@@ -329,6 +312,8 @@ local function LibaryMenu()
                         if Event[2] == 1 then
                             --open settings thing
                             AppSlected = ListOFApps[((Event[4] - 2 ) / 2)]
+                            print(AppSlected)
+                            UpdateDoubleBuffer()
 
                         elseif Event[2] == 2 then
                             --open app
@@ -339,24 +324,160 @@ local function LibaryMenu()
             
             end
         else
-            --player is clicking in tab menu
-
-                --player is clicking on tab menu
-                if Event[3] < 2 then
-
-                elseif Event[3] < 11 then
-                    MenuSelectioned = "library"
-                elseif Event[3] < 20 then
-                    MenuSelectioned = "Profile"
-                elseif Event[3] < 29 then
-                    MenuSelectioned = "Store"
-                end
-                
+            --player is clicking on tab menu
+            if Event[3] < 2 then
+            elseif Event[3] < 11 then
+                MenuSelectioned = "library"
+            elseif Event[3] < 20 then
+                MenuSelectioned = "Profile"
+            elseif Event[3] < 29 then
+                MenuSelectioned = "Store"
+            end
         end
-    
-    
     end
 end
+
+
+
+
+
+---------------------------------
+--- Code todo with store page ---
+---------------------------------
+
+
+local StoreSelected = {
+    Url = "https://raw.githubusercontent.com/Ai-Kiwi/Toaster/main/AppList",
+    AppListCache = {}
+}
+--get storeselected data from website
+local Website = http.get(StoreSelected.Url)
+if Website then
+    StoreSelected.AppListCache = textutils.unserialize(Website.readAll())
+    Website.close()
+end
+
+local StoreAppSlected = nil
+
+local function MainStorePageForApp()
+    paintutils.drawFilledBox(Settings.SizeOfLibarySideTab + 1, 2, MoniterX, MoniterY, colors.gray, colors.gray)
+    
+
+    if StoreAppSlected then
+        --draws background for title text
+        paintutils.drawFilledBox(Settings.SizeOfLibarySideTab + 1, 2, MoniterX, 6, Settings.MainColor, colors.lightGray,"X")
+
+        --draws big title text
+        term.setCursorPos(Settings.SizeOfLibarySideTab + 3, 4)
+        BigFont.bigPrint(StoreAppSlected.Name)
+        --draws play butten
+        DrawTextWithBoarder("Install",Settings.SizeOfLibarySideTab + 4, 9,Settings.MainColor,colors.white,Settings.MainColor ,colors.gray, false)
+        
+        
+        --draw app description
+        term.setCursorPos(Settings.SizeOfLibarySideTab + 4, 11)
+        term.setTextColor(colors.white)
+        local RowTextSize = MoniterX - (5 + Settings.SizeOfLibarySideTab)
+        for i=1, MoniterY - 11 do
+            term.setCursorPos(Settings.SizeOfLibarySideTab + 4, 11 + i)
+            term.write(string.sub(StoreAppSlected.Desc, (i - 1) * RowTextSize, (i * RowTextSize) - 1))
+        end
+
+    end
+
+    paintutils.drawBox(Settings.SizeOfLibarySideTab + 1, 2, MoniterX, MoniterY, colors.black, colors.black)
+end
+
+local function StoreMenu()
+
+    --draw the list of all of the apps
+    paintutils.drawFilledBox(1, 2, Settings.SizeOfLibarySideTab, MoniterY, colors.gray, colors.black)
+    for k,v in pairs(StoreSelected.AppListCache) do
+        --look if app is selected
+        term.setTextColor(colors.white)
+        if v == StoreAppSlected then
+            term.setBackgroundColor(Settings.MainColor)
+        else
+            term.setBackgroundColor(colors.gray)
+        end
+        
+        --goto app pos then draw
+        term.setCursorPos(2, (k * 2) + 2)
+        term.write(TextCutOFF(StoreSelected.AppListCache[k].Name,Settings.SizeOfLibarySideTab - 2, true))
+        
+        --if app is selected then draw it big so it has big outline
+        if v == StoreAppSlected then
+            DrawTextWithBoarder(TextCutOFF(StoreSelected.AppListCache[k].Name,Settings.SizeOfLibarySideTab - 2, true),2, (k * 2) + 2,Settings.MainColor,colors.white,Settings.MainColor ,colors.gray, false)
+        end
+    end
+    paintutils.drawBox(1, 2, Settings.SizeOfLibarySideTab, MoniterY, colors.black, colors.black)
+    MainStorePageForApp()
+    DrawTabMenu()
+    UpdateDoubleBuffer()
+
+    local Event = {os.pullEvent()}
+    if Event[1] == "mouse_click" then
+        if Event[4] > 2 then
+            if Event[3] > Settings.SizeOfLibarySideTab then
+                --player is clicking on app page menu
+                
+                --looks if the player is clicking on install button
+                if Event[4] > 7 and Event[4] < 14 then
+                    fs.makeDir("Star/Apps/" .. StoreAppSlected.Name)
+
+
+                    --downloads
+                    local DataToSave = {
+                        ["startup.lua"] = "shell.run(\"wget run " .. StoreAppSlected.DownloadUrl .. "\")"
+                    }
+                    local FileToSave = fs.open("Star/Apps/"..StoreAppSlected.Name.."/Data.vfs", "w")
+                    FileToSave.write(textutils.serialize(DataToSave))
+                    FileToSave.close()
+                    
+                    --saves verson installed
+                    local FileToSave = fs.open("Star/Apps/"..StoreAppSlected.Name.."/info.data", "w")
+                    DataToSave = {
+                        ["Version"] = StoreAppSlected.VERSION
+                    }
+                    FileToSave.write(textutils.serialize(StoreAppSlected))
+                    FileToSave.close()
+
+                    MenuSelectioned = "library"
+                end
+            else
+                --player is clicking on app list
+                if StoreSelected.AppListCache[((Event[4] - 2 ) / 2)] then
+                    if StoreSelected.AppListCache[((Event[4] - 2 ) / 2)] ~= nil then
+                        if Event[2] == 1 then
+                            --open settings thing
+                            StoreAppSlected = StoreSelected.AppListCache[((Event[4] - 2 ) / 2)]
+
+
+                        end
+                    end
+                end
+            
+            end
+        else
+            --player is clicking on tab menu
+            if Event[3] < 2 then
+            elseif Event[3] < 11 then
+                MenuSelectioned = "library"
+            elseif Event[3] < 20 then
+                MenuSelectioned = "Profile"
+            elseif Event[3] < 29 then
+                MenuSelectioned = "Store"
+            end
+        end
+    end
+
+end
+
+
+
+-----------------
+--- main loop ---
+-----------------
 
 while true do
     term.setBackgroundColor(colors.gray)
@@ -366,15 +487,14 @@ while true do
 
     if MenuSelectioned == "library" then
         LibaryMenu()
+    elseif MenuSelectioned == "Store" then
+        StoreMenu()
     else
         MenuSelectioned = "library"
     end
 end
 
 
-
-paintutils.drawPixel(26 , 20, colors.red)
-term.setCursorPos(1, 10)
 
 
 
