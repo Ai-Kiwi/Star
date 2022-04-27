@@ -7,9 +7,8 @@ to install just run the following.
 
 # todo  
  1. make store menu work (will work by downloading app list off file)
- 2. make installer program
- 3. add program to cheek for what files need updating
- 4. change marketing from toaster to star
- 5. clean up code (make functions instead of copy pasting)
- 6. support muaplue stores
- 7. add auto updating
+ 2. add program to cheek for what files need updating
+ 3. change marketing from toaster to star
+ 4. clean up code (make functions instead of copy pasting)
+ 5. support muaplue stores
+ 6. add auto updating
