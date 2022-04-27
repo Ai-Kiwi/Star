@@ -74,6 +74,10 @@ local function LoadProgram(ProgramName)
     local vm = yellowbox:new(file.readAll())
     file.close()
     vm:loadVFS("Star/Apps/" .. ProgramName .. "/Data.vfs")
+    local peripherals = peripheral.getNames()
+    for i = 1, #peripherals do
+        vm:loadPeripheral(peripherals[i], peripherals[i])
+    end
     vm:resume()
     while vm.running do
         vm:queueEvent(os.pullEventRaw())
