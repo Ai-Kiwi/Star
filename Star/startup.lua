@@ -104,7 +104,7 @@ DrawToastText((MoniterX / 2) - 4,(MoniterY / 2) - 3,"Updating logo File")
 DownloadFile("https://raw.githubusercontent.com/Ai-Kiwi/Star/main/Star/Data/Logo.nfp","Star/Data/Logo.nfp")
 
 
-shell.run("Star/main.lua")
+shell.run("Star/Main.lua")
 
 term.redirect(term.native())
 
