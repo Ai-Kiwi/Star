@@ -14,3 +14,4 @@ to install just run the following.
  6. add auto updating
  7. make installer not just haveclick in box
  8. remove bug in installer with werid icon side
+ 9. dont make every peripheal get passed through
