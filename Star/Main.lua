@@ -76,7 +76,7 @@ local function LoadProgram(ProgramName)
     vm:loadVFS("Star/Apps/" .. ProgramName .. "/Data.vfs")
     local peripherals = peripheral.getNames()
     for i = 1, #peripherals do
-        vm:loadPeripheral(peripherals[i], peripherals[i])
+        vm:exportPeripheral(peripherals[i], peripherals[i])
     end
     vm:resume()
     while vm.running do
