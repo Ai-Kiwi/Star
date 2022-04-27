@@ -12,3 +12,5 @@ to install just run the following.
  4. clean up code (make functions instead of copy pasting)
  5. support muaplue stores
  6. add auto updating
+ 7. make installer not just haveclick in box
+ 8. remove bug in installer with werid icon side
