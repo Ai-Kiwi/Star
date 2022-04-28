@@ -69,20 +69,29 @@ end
 
 local function LoadProgram(ProgramName)
     term.redirect(RootWindows)
-    local yellowbox = require("libs.yellowbox")
-    local file = fs.open("Star/libs/bios.lua", "rb")
-    local vm = yellowbox:new(file.readAll())
-    file.close()
-    vm:loadVFS("Star/Apps/" .. ProgramName .. "/Data.vfs")
-    local peripherals = peripheral.getNames()
-    for i = 1, #peripherals do
-        vm:exportPeripheral(peripherals[i], peripherals[i])
-    end
-    vm:resume()
-    while vm.running do
-        vm:queueEvent(os.pullEventRaw())
-        vm:resume()
-    end
+    term.clear()
+    shell.run("Star/Apps/"..ProgramName.."/Data/startup.lua")
+    
+
+
+
+    
+    
+    --we dont use vm anymore :(
+    --local yellowbox = require("libs.yellowbox")
+    --local file = fs.open("Star/libs/bios.lua", "rb")
+    --local vm = yellowbox:new(file.readAll())
+    --file.close()
+    --vm:loadVFS("Star/Apps/" .. ProgramName .. "/Data.vfs")
+    --local peripherals = peripheral.getNames()
+    --for i = 1, #peripherals do
+    --    vm:loadPeripheral(peripherals[i], peripherals[i])
+    --end
+    --vm:resume()
+    --while vm.running do
+    --    vm:queueEvent(os.pullEventRaw())
+    --    vm:resume()
+    --end
 end
 
 local function DrawTextWithBoarder(TextString,PosX,PosY,OutLineColor,TextColor,TextBackgroundColor,NONTextColor,UseLargePadding)
@@ -429,15 +438,28 @@ local function StoreMenu()
                 if Event[4] > 7 and Event[4] < 14 then
                     fs.makeDir("Star/Apps/" .. StoreAppSlected.Name)
 
+                    --download app
+                    local Download = http.get(StoreAppSlected.DownloadUrl)
+                    if Download then
+                        local AppData = Download.readAll()
+                        Download.close()
+                        fs.makeDir("Star/Apps/" .. StoreAppSlected.Name .. "/Data/")
+                        local AppFile = fs.open("Star/Apps/" .. StoreAppSlected.Name .. "/Data/startup.lua", "w")
+                        AppFile.write(AppData)
+                        AppFile.close()
+                        
+                    end
 
                     --downloads
-                    local DataToSave = {
-                        ["startup.lua"] = "shell.run(\"wget run " .. StoreAppSlected.DownloadUrl .. "\")"
-                    }
-                    local FileToSave = fs.open("Star/Apps/"..StoreAppSlected.Name.."/Data.vfs", "w")
-                    FileToSave.write(textutils.serialize(DataToSave))
-                    FileToSave.close()
+                    --vms not used anymore
+                    --local DataToSave = {
+                    --    ["startup.lua"] = "shell.run(\"wget run " .. StoreAppSlected.DownloadUrl .. "\")"
+                    --}
+                    --local FileToSave = fs.open("Star/Apps/"..StoreAppSlected.Name.."/Data.vfs", "w")
+                    --FileToSave.write(textutils.serialize(DataToSave))
+                    --FileToSave.close()
                     
+
                     --saves verson installed
                     local FileToSave = fs.open("Star/Apps/"..StoreAppSlected.Name.."/info.data", "w")
                     DataToSave = {
