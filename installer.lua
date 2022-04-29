@@ -184,8 +184,8 @@ while true do
 
         
         --downloads
-        DownloadFile("https://gist.githubusercontent.com/MCJack123/e634347fe7a3025d19d9f7fcf7e01c24/raw/df2516c628ee0111f77802f0884f9b24920a76e2/yellowbox.lua","Star/libs/yellowbox.lua")
-        DownloadFile("https://raw.githubusercontent.com/cc-tweaked/CC-Tweaked/v1.16.4-1.95.2/src/main/resources/data/computercraft/lua/bios.lua","Star/libs/bios.lua")
+        --DownloadFile("https://gist.githubusercontent.com/MCJack123/e634347fe7a3025d19d9f7fcf7e01c24/raw/df2516c628ee0111f77802f0884f9b24920a76e2/yellowbox.lua","Star/libs/yellowbox.lua")
+        --DownloadFile("https://raw.githubusercontent.com/cc-tweaked/CC-Tweaked/v1.16.4-1.95.2/src/main/resources/data/computercraft/lua/bios.lua","Star/libs/bios.lua")
         DownloadFile("https://pastebin.com/raw/3LfWxRWh","Star/libs/bigfont.lua")
 
         --updates the installed files
