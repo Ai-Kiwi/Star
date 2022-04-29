@@ -88,8 +88,8 @@ end
 --downloads
 --DrawToastText((MoniterX / 2) - 4,(MoniterY / 2) - 3,"Downloading YellowBox")
 --DownloadFile("https://gist.githubusercontent.com/MCJack123/e634347fe7a3025d19d9f7fcf7e01c24/raw/df2516c628ee0111f77802f0884f9b24920a76e2/yellowbox.lua","Star/libs/yellowbox.lua")
-DrawToastText((MoniterX / 2) - 4,(MoniterY / 2) - 3,"Downloading bios")
-DownloadFile("https://raw.githubusercontent.com/cc-tweaked/CC-Tweaked/v1.16.4-1.95.2/src/main/resources/data/computercraft/lua/bios.lua","Star/libs/bios.lua")
+--DrawToastText((MoniterX / 2) - 4,(MoniterY / 2) - 3,"Downloading bios")
+--DownloadFile("https://raw.githubusercontent.com/cc-tweaked/CC-Tweaked/v1.16.4-1.95.2/src/main/resources/data/computercraft/lua/bios.lua","Star/libs/bios.lua")
 DrawToastText((MoniterX / 2) - 4,(MoniterY / 2) - 3,"Downloading BigFont")
 DownloadFile("https://pastebin.com/raw/3LfWxRWh","Star/libs/bigfont.lua")
 
