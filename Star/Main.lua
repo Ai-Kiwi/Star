@@ -360,7 +360,7 @@ end
 
 
 local StoreSelected = {
-    Url = "https://raw.githubusercontent.com/Ai-Kiwi/Toaster/main/AppList",
+    Url = "https://raw.githubusercontent.com/Ai-Kiwi/CC-Apps/main/AppList",
     AppListCache = {}
 }
 --get storeselected data from website
